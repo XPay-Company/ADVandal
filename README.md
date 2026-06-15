@@ -1,8 +1,3 @@
-Вот полностью исправленный и отформатированный README. Ошибка возникала из-за незакрытого блока кода для диаграммы Mermaid, из-за чего весь остальной текст воспринимался как часть кода и ломал разметку. Я также восстановил правильные Markdown-таблицы, оформление кода и шапку профиля.
-
-Просто скопируй текст ниже и вставь в свой файл `README.md`:
-
-```markdown
 <div align="center">
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&duration=2500&pause=800&color=F8A307&center=true&vCenter=true&width=700&lines=%E2%9A%A1+ADVandal;Intercepting+ad+requests...;Monkey-patching+window.b...;Killing+trackers+at+root...;Saving+your+traffic!" alt="Typing SVG" />
   
