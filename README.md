@@ -1,159 +1,158 @@
 <div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&duration=2500&pause=800&color=F8A307&center=true&vCenter=true&width=700&lines=%E2%9A%A1+ADVandal;Intercepting+ad+requests...;Monkey-patching+window.b...;Killing+trackers+at+root...;Saving+your+traffic!" alt="Typing SVG" />
+  <img src="https://s.fotora.ru/74039df584dda10d.png" alt="ADVandal Logo" width="200"/>
+  
+  [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&duration=2500&pause=800&color=F8A307&center=true&vCenter=true&width=700&lines=%E2%9A%A1+ADVandal;Intercepting+ad+requests...;Monkey-patching+window.b...;Killing+trackers+at+root...;Saving+your+traffic!)](https://git.io/typing-svg)
   
   [![GitHub license](https://img.shields.io/github/license/XPay-Company/ADVandal?style=for-the-badge&color=orange)](https://github.com/XPay-Company/ADVandal/blob/main/LICENSE)
   [![uBlock Origin](https://img.shields.io/badge/uBlock%20Origin-Compatible-purple?style=for-the-badge&logo=ublockorigin)](https://github.com/gorhill/uBlock)
-  [![Stage](https://img.shields.io/badge/Stage-Development-blue?style=for-the-badge)](https://github.com/XPay-Company/ADVandal)
+  [![Stage](https://img.shields.io/badge/Stage-Active%20Development-blue?style=for-the-badge)](https://github.com/XPay-Company/ADVandal)
   [![GitHub stars](https://img.shields.io/github/stars/XPay-Company/ADVandal?style=for-the-badge&color=yellow)](https://github.com/XPay-Company/ADVandal/stargazers)
   [![GitHub forks](https://img.shields.io/github/forks/XPay-Company/ADVandal?style=for-the-badge)](https://github.com/XPay-Company/ADVandal/network)
 </div>
 
 ---
 
-## 🧨 Advanced Interception & Annihilation of Yandex Ad Scripts at Initialization
+## ⚡ WE DON'T HIDE ADS. WE VANDALIZE THEIR SOURCE CODE.
 
-> Cosmetic filters hide ads *after* they load.  
-> **ADVandal kills them before a single byte leaves your device.**
+> **The ad industry evolved. Your blocker should have evolved faster.**
 
-ADVandal is a high‑performance [uBlock Origin](https://github.com/gorhill/uBlock) scriptlet that injects itself at `document-start`, impersonates native Yandex objects, and disarms ad‑loading call chains *before* the browser ever sends a network request. No banners. No tracking. No wasted bandwidth.
+While the world was sleeping, ad networks learned to dance around EasyList. They randomize URLs, obfuscate scripts, and bury trackers under layers of legitimate code. Generic filters are playing whack-a-mole with a hydra. You're still being tracked. Your bandwidth is still being stolen. The ads are just... invisible.
+
+**This ends now.**
+
+ADVandal is not a filter list. It's a surgical instrument for [uBlock Origin](https://github.com/gorhill/uBlock). It injects itself at the kernel of the page load, impersonates native ad objects, and performs a targeted lobotomy on their initialization logic. We don't block the network request—we make sure the request is never born.
 
 ---
 
 ## 📖 Table of Contents
 
-- [How It Works](#-how-it-works-under-the-hood)
-- [Targets & Intercepted Methods](#-targets--intercepted-methods)
-- [Why ADVandal?](#-why-advandal)
+- [The Manifesto](#-the-manifesto)
+- [How It Works (Under the Hood)](#-how-it-works-under-the-hood)
+- [Visual Proof](#-visual-proof)
 - [Installation](#-installation)
 - [Debugging & Live Logs](#-debugging--live-logs)
-- [Contributing](#-contributing)
+- [Support & Contribution](#-support--contribution)
 - [License](#-license)
 
 ---
 
 ## 🧠 How It Works (Under the Hood)
 
-ADVandal leverages **monkey‑patching** – dynamically replacing functions at runtime – combined with deep knowledge of Yandex’s obfuscated ad pipeline.
+Forget CSS rules. We operate at the JavaScript runtime level. ADVandal uses **pre-emptive monkey-patching** at `document-start`—before any other byte of JavaScript is executed.
+
+We have reverse-engineered the obfuscated call stacks of major ad networks (with a current focus on Yandex's ad bundle). ADVandal creates a shadow clone of the ad controller object and replaces every critical method with a void.
 
 ```mermaid
 graph TD
     A[Page Load] -->|document-start| B(ADVandal Injects)
-    B --> C{Takeover window.b}
+    B --> C{Interceptor Active}
     C -->|Neutralize| D[b.load → noopFunc]
     C -->|Neutralize| E[b._formatImage → noopFunc]
     C -->|Neutralize| F[b._sendComplete → noopFunc]
-    D --> G[Network request BLOCKED]
-    E --> G
-    F --> H[Telemetry call BLOCKED]
-    G --> I((Ad never rendered))
-    H --> I
-
+    C -->|Monitor| G[new Image()]
+    D --> H[Network request TERMINATED]
+    E --> H
+    F --> I[Telemetry call TERMINATED]
+    G --> J[Pixel tracker DESTROYED]
+    H --> K((Zero Bytes Sent))
+    I --> K
+    J --> K
 ```
 
-The script runs before any other JavaScript on the page. It creates a “shadow” copy of the ad object, patches every critical method with an empty function, and monitors the creation of new `Image()` instances to prevent sneaky pixel trackers. The result: Yandex’s ad logic executes but does absolutely nothing.
+The ad logic runs—and hits a concrete wall. The function calls fire, but they execute absolutely nothing. No errors. No DOM breakage. Just perfect, silent annihilation.
 
 ---
 
-## 🎯 Targets & Intercepted Methods
+## 🎯 Target Acquisition
 
-Based on reverse‑engineered call stacks of the obfuscated Yandex ad bundle.
+Based on deep analysis of obfuscated ad delivery chains across the English and Russian-speaking web.
 
-| Method / Object | Status | What It Does Without ADVandal | Interception Priority |
-| --- | --- | --- | --- |
-| `window.b.load` | 🛑 Blocked | Triggers the main banner request | Critical |
-| `window.b._formatImage` | 🛑 Blocked | Assembles the ad container (rendering) | High |
-| `window.b._sendComplete` | 🛑 Blocked | Sends telemetry & view logs back to server | Medium |
-| `new Image()` | 🛡️ Monitored | Creates off‑DOM tracking pixels | High |
+| Method / Object | Status | Without ADVandal | Interception Priority |
+| :--- | :---: | :--- | :---: |
+| `window.b.load` | 🛑 Blocked | Fires the primary banner request | `CRITICAL` |
+| `window.b._formatImage` | 🛑 Blocked | Renders the ad container to DOM | `HIGH` |
+| `window.b._sendComplete` | 🛑 Blocked | Sends viewability telemetry to the mothership | `HIGH` |
+| `new Image()` constructor | 🛡️ Sabotaged | Creates off-DOM tracking pixels to bypass observers | `HIGH` |
 
-> **Why `new Image()`?** Yandex sometimes creates invisible Image elements in memory to bypass DOM observers. ADVandal silently intercepts the constructor and neutralizes requests made without a real `<img>` tag.
+> **Why intercept `new Image()`?** Ad networks have evolved to spawn pixel trackers in pure JavaScript memory, completely detached from the DOM tree. Standard DOM observers are blind to this. ADVandal hooks directly into the constructor to choke these ghost pixels at the source.
 
 ---
 
-## 💡 Why ADVandal?
+## 🎬 Visual Proof
 
-| Approach | Advantage | Limitation |
-| --- | --- | --- |
-| **Cosmetic filters** (e.g. `##.ad`) | Simple, safe | Ads still load, consume bandwidth, track |
-| **Network filters** (e.g. `||ad.js`) | Blocks requests entirely | Easily circumvented by renaming scripts |
-| **ADVandal** (scriptlet) | Pre‑emptive, works on obfuscated code | Requires deep analysis of ad internals |
+*Placeholder for video/GIF.*
+*Watch the live uBlock Origin logger as ADVandal systematically dismantles ad initialization in real-time.*
 
-* ✅ Completely stops ad requests before they reach the network
-* ✅ Zero overhead after injection – just empty function calls
-* ✅ Eliminates telemetry and viewability logs
-* ✅ Saves traffic on metered connections
+<!-- Replace with your actual video/GIF link -->
+<!-- [![ADVandal Live Action](https://img.youtube.com/vi/YOUR_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID) -->
 
 ---
 
 ## 📦 Installation
 
-### 1. Enable Advanced User Mode in uBlock Origin
+You're a vandal now. Here's how to arm yourself.
 
-1. Open the uBlock Origin Dashboard → **Settings** tab.
-2. Check **“I am an advanced user”** at the bottom.
-3. Click the gear icon ⚙️ that appears next to it.
+### 1. Unlock Advanced User Mode
+uBlock Origin's full power is hidden behind a single checkbox.
+1.  Open the uBlock Origin Dashboard → **Settings** tab.
+2.  Scroll down. Check **“I am an advanced user”**.
+3.  Click the gear icon ⚙️ that appears. This is your new playground.
 
-### 2. Set userResourcesLocation
+### 2. Load the Vandal Payload
+Set the scriptlet resource location.
+1.  In the advanced settings, find `userResourcesLocation`.
+2.  Change its value to our raw scriptlet URL:
+    ```text
+    https://raw.githubusercontent.com/XPay-Company/ADVandal/main/src/advandal.js
+    ```
+3.  Click **“Apply changes”** at the top.
 
-1. In the advanced settings, locate `userResourcesLocation`.
-2. Replace its value with the raw URL of the scriptlet:
+### 3. Deploy the Filter
+Link the scriptlet to your target domains.
+1.  Go to the **“My filters”** tab.
+2.  Add this surgical strike for every domain you want to purify:
+    ```adbanner
+    yandex.ru##+js(advandal)
+    ```
+3.  Click **“Apply changes”**.
 
-```text
-[https://raw.githubusercontent.com/XPay-Company/ADVandal/main/src/advandal.js](https://raw.githubusercontent.com/XPay-Company/ADVandal/main/src/advandal.js)
-
-```
-
-3. Click **“Apply changes”** at the top of the page.
-
-### 3. Add the Scriptlet Filter
-
-1. Go to the **“My filters”** tab.
-2. Add the following line for every Yandex domain you want to protect:
-
-```text
-yandex.ru##+js(advandal)
-
-```
-
-3. Click **“Apply changes”**.
-
-✅ **Done.** All Yandex ad scripts are now neutralized at startup.
+✅ **Operation complete.** Ad scripts are now neutralized at startup.
 
 ---
 
 ## 🔍 Debugging & Live Logs
 
-To watch the “mole” in action, open the Browser Console (`F12` → **Console**).
-On successful interception you’ll see:
+Want to watch the carnage? Open the Browser Console (`F12` → **Console**). ADVandal reports every kill.
 
 ```text
 [ADVandal] Spy successfully infiltrated the site’s collective!
 [ADVandal] Intercepted call to b._formatImage()
 [ADVandal] Network request b.load() successfully sent down a dead end.
-
 ```
 
-You can also run this snippet to check if the interceptor is alive:
+To verify the interceptor is alive and holding, run this snippet in the console:
 
 ```javascript
-console.log( window.b.load.toString() )  // should show "function(){}" (empty)
-
+// Should return an empty function body, not native code.
+console.log(window.b.load.toString());
 ```
 
 ---
 
-## 🤝 Contributing
+## 🤝 Join the Vandal Crew
 
-The project is in active development. If you discover a new call stack or notice that Yandex has changed their obfuscation:
+This is a war of attrition. Ad networks will adapt. We adapt faster. If you spot a new ad surviving the purge, or a new obfuscation technique:
 
-1. Open an Issue.
-2. Attach a screenshot of the **Initiator / Call Stack** from DevTools (Network tab).
-3. Describe the ad behavior you still see.
+1.  **Open an Issue** – Describe the ad behavior and the site.
+2.  **Attach Intel** – Screenshots of the **Initiator / Call Stack** from DevTools (Network tab) are gold.
+3.  **Share Samples** – Any snippet of the obfuscated ad code helps us forge a new counter.
 
-We’ll update the interception signatures promptly.
+We will update the interception signatures with extreme prejudice.
 
 ---
 
 ## ⚖️ License
 
-This project is distributed under the MIT License.
-The code is provided “as is” without warranty of any kind.
+Distributed under the MIT License. See `LICENSE` for more information.
+This is a tool of digital self-defense. Use it with the confidence of a righteous vandal.
+```
